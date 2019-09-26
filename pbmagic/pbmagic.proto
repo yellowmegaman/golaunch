@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package pbmagic;
+
+service FileListGiver {
+  rpc GiveFileList (FileListRequest) returns (FileListReply) {}
+}
+
+message FileListRequest {
+  string name = 1;
+}
+
+message FileListReply {
+  string message = 1;
+}
