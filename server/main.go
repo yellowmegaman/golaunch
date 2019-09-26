@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"context"
 	pb "github.com/yellowmegaman/golaunch/pbmagic"
 	"google.golang.org/grpc"
 	"log"
@@ -14,9 +14,9 @@ const (
 
 type server struct{}
 
-func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
+func (s *server) GiveFileList(ctx context.Context, in *pb.FileListRequest) (*pb.FileListReply, error) {
 	log.Printf("Received: %v", in.GetName())
-	return &pb.HelloReply{Message: "Hello " + in.GetName()}, nil
+	return &pb.FileListReply{Message: "FileList " + in.GetName()}, nil
 }
 
 func main() {
@@ -25,7 +25,7 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	s := grpc.NewServer()
-	pb.RegisterFileListGiverServer(s, &server{})
+	pb.RegisterGiverServer(s, &server{})
 	if err := s.Serve(listener); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}

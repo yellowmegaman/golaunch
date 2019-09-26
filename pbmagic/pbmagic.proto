@@ -6,7 +6,7 @@ option java_outer_classname = "HelloWorldProto";
 
 package pbmagic;
 
-service FileListGiver {
+service Giver {
   rpc GiveFileList (FileListRequest) returns (FileListReply) {}
 }
 

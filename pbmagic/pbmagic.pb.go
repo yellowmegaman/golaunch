@@ -116,13 +116,13 @@ var fileDescriptor_056bed50909f283e = []byte{
 	0xf8, 0xdd, 0x32, 0x73, 0x52, 0x7d, 0x32, 0x8b, 0x4b, 0x82, 0x52, 0x0b, 0x4b, 0x53, 0x8b, 0x4b,
 	0x84, 0x84, 0xb8, 0x58, 0xf2, 0x12, 0x73, 0x53, 0x25, 0x18, 0x15, 0x18, 0x35, 0x38, 0x83, 0xc0,
 	0x6c, 0x25, 0x4d, 0x2e, 0x5e, 0x84, 0xb2, 0x82, 0x9c, 0x4a, 0x21, 0x09, 0x2e, 0xf6, 0xdc, 0xd4,
-	0xe2, 0xe2, 0xc4, 0x74, 0x98, 0x3a, 0x18, 0xd7, 0x28, 0x18, 0xa1, 0xd4, 0x3d, 0xb3, 0x2c, 0xb5,
-	0x48, 0xc8, 0x89, 0x8b, 0x07, 0xc4, 0x80, 0x09, 0x0a, 0x49, 0xe8, 0xc1, 0xdc, 0x82, 0x66, 0xb3,
-	0x94, 0x18, 0x16, 0x99, 0x82, 0x9c, 0x4a, 0x25, 0x06, 0x27, 0x03, 0x2e, 0xe9, 0xcc, 0x7c, 0xbd,
-	0xf4, 0xa2, 0x82, 0x64, 0xbd, 0xd4, 0x8a, 0xc4, 0xdc, 0x82, 0x9c, 0xd4, 0x62, 0xbd, 0x8c, 0xd4,
-	0x9c, 0x9c, 0xfc, 0xf2, 0xfc, 0xa2, 0x9c, 0x14, 0x27, 0x7e, 0x0f, 0x10, 0x3b, 0x1c, 0xc4, 0x0e,
-	0x00, 0xf9, 0x2f, 0x80, 0x31, 0x89, 0x0d, 0xec, 0x51, 0x63, 0x40, 0x00, 0x00, 0x00, 0xff, 0xff,
-	0x1c, 0xd9, 0x56, 0xca, 0xf9, 0x00, 0x00, 0x00,
+	0xe2, 0xe2, 0xc4, 0x74, 0x98, 0x3a, 0x18, 0xd7, 0xc8, 0x9b, 0x8b, 0xd5, 0x3d, 0xb3, 0x2c, 0xb5,
+	0x48, 0xc8, 0x89, 0x8b, 0x07, 0xc4, 0x80, 0xe9, 0x13, 0x92, 0xd0, 0x83, 0xb9, 0x01, 0xcd, 0x46,
+	0x29, 0x31, 0x2c, 0x32, 0x05, 0x39, 0x95, 0x4a, 0x0c, 0x4e, 0x06, 0x5c, 0xd2, 0x99, 0xf9, 0x7a,
+	0xe9, 0x45, 0x05, 0xc9, 0x7a, 0xa9, 0x15, 0x89, 0xb9, 0x05, 0x39, 0xa9, 0xc5, 0x7a, 0x19, 0xa9,
+	0x39, 0x39, 0xf9, 0xe5, 0xf9, 0x45, 0x39, 0x29, 0x4e, 0xfc, 0x1e, 0x20, 0x76, 0x38, 0x88, 0x1d,
+	0x00, 0xf2, 0x57, 0x00, 0x63, 0x12, 0x1b, 0xd8, 0x83, 0xc6, 0x80, 0x00, 0x00, 0x00, 0xff, 0xff,
+	0x5c, 0x30, 0xa0, 0x82, 0xf1, 0x00, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -133,72 +133,72 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// FileListGiverClient is the client API for FileListGiver service.
+// GiverClient is the client API for Giver service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
-type FileListGiverClient interface {
+type GiverClient interface {
 	GiveFileList(ctx context.Context, in *FileListRequest, opts ...grpc.CallOption) (*FileListReply, error)
 }
 
-type fileListGiverClient struct {
+type giverClient struct {
 	cc *grpc.ClientConn
 }
 
-func NewFileListGiverClient(cc *grpc.ClientConn) FileListGiverClient {
-	return &fileListGiverClient{cc}
+func NewGiverClient(cc *grpc.ClientConn) GiverClient {
+	return &giverClient{cc}
 }
 
-func (c *fileListGiverClient) GiveFileList(ctx context.Context, in *FileListRequest, opts ...grpc.CallOption) (*FileListReply, error) {
+func (c *giverClient) GiveFileList(ctx context.Context, in *FileListRequest, opts ...grpc.CallOption) (*FileListReply, error) {
 	out := new(FileListReply)
-	err := c.cc.Invoke(ctx, "/pbmagic.FileListGiver/GiveFileList", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/pbmagic.Giver/GiveFileList", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// FileListGiverServer is the server API for FileListGiver service.
-type FileListGiverServer interface {
+// GiverServer is the server API for Giver service.
+type GiverServer interface {
 	GiveFileList(context.Context, *FileListRequest) (*FileListReply, error)
 }
 
-// UnimplementedFileListGiverServer can be embedded to have forward compatible implementations.
-type UnimplementedFileListGiverServer struct {
+// UnimplementedGiverServer can be embedded to have forward compatible implementations.
+type UnimplementedGiverServer struct {
 }
 
-func (*UnimplementedFileListGiverServer) GiveFileList(ctx context.Context, req *FileListRequest) (*FileListReply, error) {
+func (*UnimplementedGiverServer) GiveFileList(ctx context.Context, req *FileListRequest) (*FileListReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GiveFileList not implemented")
 }
 
-func RegisterFileListGiverServer(s *grpc.Server, srv FileListGiverServer) {
-	s.RegisterService(&_FileListGiver_serviceDesc, srv)
+func RegisterGiverServer(s *grpc.Server, srv GiverServer) {
+	s.RegisterService(&_Giver_serviceDesc, srv)
 }
 
-func _FileListGiver_GiveFileList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Giver_GiveFileList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(FileListRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(FileListGiverServer).GiveFileList(ctx, in)
+		return srv.(GiverServer).GiveFileList(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pbmagic.FileListGiver/GiveFileList",
+		FullMethod: "/pbmagic.Giver/GiveFileList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(FileListGiverServer).GiveFileList(ctx, req.(*FileListRequest))
+		return srv.(GiverServer).GiveFileList(ctx, req.(*FileListRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-var _FileListGiver_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "pbmagic.FileListGiver",
-	HandlerType: (*FileListGiverServer)(nil),
+var _Giver_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "pbmagic.Giver",
+	HandlerType: (*GiverServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "GiveFileList",
-			Handler:    _FileListGiver_GiveFileList_Handler,
+			Handler:    _Giver_GiveFileList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
