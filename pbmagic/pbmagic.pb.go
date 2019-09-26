@@ -4,8 +4,12 @@
 package pbmagic
 
 import (
+	context "context"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
+	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 	math "math"
 )
 
@@ -106,7 +110,7 @@ func init() {
 func init() { proto.RegisterFile("pbmagic.proto", fileDescriptor_056bed50909f283e) }
 
 var fileDescriptor_056bed50909f283e = []byte{
-	// 140 bytes of a gzipped FileDescriptorProto
+	// 184 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x2d, 0x48, 0xca, 0x4d,
 	0x4c, 0xcf, 0x4c, 0xd6, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x87, 0x72, 0x95, 0x54, 0xb9,
 	0xf8, 0xdd, 0x32, 0x73, 0x52, 0x7d, 0x32, 0x8b, 0x4b, 0x82, 0x52, 0x0b, 0x4b, 0x53, 0x8b, 0x4b,
@@ -114,6 +118,89 @@ var fileDescriptor_056bed50909f283e = []byte{
 	0x6c, 0x25, 0x4d, 0x2e, 0x5e, 0x84, 0xb2, 0x82, 0x9c, 0x4a, 0x21, 0x09, 0x2e, 0xf6, 0xdc, 0xd4,
 	0xe2, 0xe2, 0xc4, 0x74, 0x98, 0x3a, 0x18, 0xd7, 0x28, 0x18, 0xa1, 0xd4, 0x3d, 0xb3, 0x2c, 0xb5,
 	0x48, 0xc8, 0x89, 0x8b, 0x07, 0xc4, 0x80, 0x09, 0x0a, 0x49, 0xe8, 0xc1, 0xdc, 0x82, 0x66, 0xb3,
-	0x94, 0x18, 0x16, 0x99, 0x82, 0x9c, 0x4a, 0x25, 0x86, 0x24, 0x36, 0xb0, 0xb3, 0x8d, 0x01, 0x01,
-	0x00, 0x00, 0xff, 0xff, 0xad, 0xc5, 0xbd, 0xa1, 0xc7, 0x00, 0x00, 0x00,
+	0x94, 0x18, 0x16, 0x99, 0x82, 0x9c, 0x4a, 0x25, 0x06, 0x27, 0x03, 0x2e, 0xe9, 0xcc, 0x7c, 0xbd,
+	0xf4, 0xa2, 0x82, 0x64, 0xbd, 0xd4, 0x8a, 0xc4, 0xdc, 0x82, 0x9c, 0xd4, 0x62, 0xbd, 0x8c, 0xd4,
+	0x9c, 0x9c, 0xfc, 0xf2, 0xfc, 0xa2, 0x9c, 0x14, 0x27, 0x7e, 0x0f, 0x10, 0x3b, 0x1c, 0xc4, 0x0e,
+	0x00, 0xf9, 0x2f, 0x80, 0x31, 0x89, 0x0d, 0xec, 0x51, 0x63, 0x40, 0x00, 0x00, 0x00, 0xff, 0xff,
+	0x1c, 0xd9, 0x56, 0xca, 0xf9, 0x00, 0x00, 0x00,
+}
+
+// Reference imports to suppress errors if they are not otherwise used.
+var _ context.Context
+var _ grpc.ClientConn
+
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the grpc package it is being compiled against.
+const _ = grpc.SupportPackageIsVersion4
+
+// FileListGiverClient is the client API for FileListGiver service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
+type FileListGiverClient interface {
+	GiveFileList(ctx context.Context, in *FileListRequest, opts ...grpc.CallOption) (*FileListReply, error)
+}
+
+type fileListGiverClient struct {
+	cc *grpc.ClientConn
+}
+
+func NewFileListGiverClient(cc *grpc.ClientConn) FileListGiverClient {
+	return &fileListGiverClient{cc}
+}
+
+func (c *fileListGiverClient) GiveFileList(ctx context.Context, in *FileListRequest, opts ...grpc.CallOption) (*FileListReply, error) {
+	out := new(FileListReply)
+	err := c.cc.Invoke(ctx, "/pbmagic.FileListGiver/GiveFileList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// FileListGiverServer is the server API for FileListGiver service.
+type FileListGiverServer interface {
+	GiveFileList(context.Context, *FileListRequest) (*FileListReply, error)
+}
+
+// UnimplementedFileListGiverServer can be embedded to have forward compatible implementations.
+type UnimplementedFileListGiverServer struct {
+}
+
+func (*UnimplementedFileListGiverServer) GiveFileList(ctx context.Context, req *FileListRequest) (*FileListReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GiveFileList not implemented")
+}
+
+func RegisterFileListGiverServer(s *grpc.Server, srv FileListGiverServer) {
+	s.RegisterService(&_FileListGiver_serviceDesc, srv)
+}
+
+func _FileListGiver_GiveFileList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FileListRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(FileListGiverServer).GiveFileList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pbmagic.FileListGiver/GiveFileList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(FileListGiverServer).GiveFileList(ctx, req.(*FileListRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+var _FileListGiver_serviceDesc = grpc.ServiceDesc{
+	ServiceName: "pbmagic.FileListGiver",
+	HandlerType: (*FileListGiverServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GiveFileList",
+			Handler:    _FileListGiver_GiveFileList_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "pbmagic.proto",
 }
