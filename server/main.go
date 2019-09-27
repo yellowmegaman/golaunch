@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	pb "github.com/yellowmegaman/golaunch/pbmagic"
+	pb "golaunch/pbmagic"
 	"google.golang.org/grpc"
 	"log"
 	"net"
