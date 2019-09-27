@@ -2,14 +2,11 @@ package main
 
 import (
 	"context"
+	"flag"
 	pb "golaunch/pbmagic"
 	"google.golang.org/grpc"
 	"log"
 	"net"
-)
-
-const (
-	port = ":50051"
 )
 
 type server struct{}
@@ -20,7 +17,9 @@ func (s *server) GiveFileList(ctx context.Context, in *pb.FileListRequest) (*pb.
 }
 
 func main() {
-	listener, err := net.Listen("tcp", port)
+	address	:= flag.String("port", ":50051", "Default address")
+	flag.Parse()
+	listener, err := net.Listen("tcp", *address)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
